@@ -25,11 +25,19 @@ public class PushItem : MonoBehaviour {
             playerPos = transform.position;
             boxPos = collObjHolder.transform.position;
             boxDist = playerPos - collObjHolder.transform.position;
-            if (Input.GetKey("a") && playerPos.x >boxPos.x)
-                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y -boxDist.y), collObj.transform.position.z);
-            else if (Input.GetKey("d") && playerPos.x <boxPos.x)
+            if (Input.GetKey("a") && playerPos.x >boxPos.x || Input.GetKey("d") && playerPos.x > boxPos.x)
+                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
+            else if (Input.GetKey("d") && playerPos.x <boxPos.x || Input.GetKey("a") && playerPos.x < boxPos.x)
             {
-                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y -boxDist.y ), collObj.transform.position.z);
+                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
+            }
+	    else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x >boxPos.x)
+            {
+                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
+            }
+	    else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x <boxPos.x)
+            {
+                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
             }
             if (Input.GetKeyUp("f"))
             {
