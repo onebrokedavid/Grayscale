@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +6,8 @@ public class PushItem : MonoBehaviour {
     bool whileHolding = false;
     bool touchingObject = false;
     bool reset = true;
-    float moveRight,moveLeft;
+    float moveRight;
+    private Rigidbody rb;
     GameObject collObj; //object colliding with player
     GameObject collObjHolder;
     Vector3 playerPos, boxPos, boxDist;
@@ -43,6 +44,8 @@ public class PushItem : MonoBehaviour {
             {
                 whileHolding = false;
                 reset = true;
+                Vector3 direction = new Vector3(0, 10, 9);
+                rb.useGravity = true;
             }
         }
 	}
@@ -57,6 +60,9 @@ public class PushItem : MonoBehaviour {
             collObj = collision.gameObject;
             if (reset)
             {
+                if (collision.rigidbody) {
+                    rb = collision.rigidbody;
+                }
                 collObjHolder = collObj;
                 reset = false;
             }
@@ -86,7 +92,7 @@ public class PushItem : MonoBehaviour {
                 whileHolding = true;
                 //drag object
                 collObj.transform.position = new Vector3((playerPos.x - boxDist.x), (playerPos.y - boxDist.y));
-
+                rb.useGravity = false;
             }
             if(Input.GetKeyUp("f"))
             {
