@@ -6,7 +6,7 @@ public class PushItem : MonoBehaviour {
     bool whileHolding = false;
     bool touchingObject = false;
     bool reset = true;
-    float moveRight;
+    float moveRight, otherMass;
     private Rigidbody rb;
     GameObject collObj; //object colliding with player
     GameObject collObjHolder;
@@ -27,18 +27,18 @@ public class PushItem : MonoBehaviour {
             boxPos = collObjHolder.transform.position;
             boxDist = playerPos - collObjHolder.transform.position;
             if (Input.GetKey("a") && playerPos.x >boxPos.x || Input.GetKey("d") && playerPos.x > boxPos.x)
-                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
+                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y-boxDist.y), collObj.transform.position.z);
             else if (Input.GetKey("d") && playerPos.x <boxPos.x || Input.GetKey("a") && playerPos.x < boxPos.x)
             {
-                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
+                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y-boxDist.y), collObj.transform.position.z);
             }
 	    else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x >boxPos.x)
             {
-                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
+                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y-boxDist.y), collObj.transform.position.z);
             }
 	    else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x <boxPos.x)
             {
-                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
+                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y-boxDist.y), collObj.transform.position.z);
             }
             if (Input.GetKeyUp("f"))
             {
@@ -46,6 +46,8 @@ public class PushItem : MonoBehaviour {
                 reset = true;
                 Vector3 direction = new Vector3(0, 10, 9);
                 rb.useGravity = true;
+                gameObject.GetComponent<Movement>().jump = false;
+                gameObject.GetComponent<Rigidbody>().mass = 1;
             }
         }
 	}
@@ -62,6 +64,7 @@ public class PushItem : MonoBehaviour {
             {
                 if (collision.rigidbody) {
                     rb = collision.rigidbody;
+                    otherMass= collision.gameObject.GetComponent<Rigidbody>().mass;
                 }
                 collObjHolder = collObj;
                 reset = false;
@@ -82,12 +85,14 @@ public class PushItem : MonoBehaviour {
 
     void PickUpObject(bool touching)
     {
-        if (touching)
+        if (touching && !whileHolding)
         {
             playerPos = transform.position;
             boxDist = playerPos - collObj.transform.position;
             if (Input.GetKey("f"))
             {
+                gameObject.GetComponent<Rigidbody>().mass +=otherMass;
+                gameObject.GetComponent<Movement>().jump = true;
                 Debug.Log("Holding object");
                 whileHolding = true;
                 //drag object
@@ -101,3 +106,4 @@ public class PushItem : MonoBehaviour {
         }
     }
 }
+
