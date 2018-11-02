@@ -9,6 +9,7 @@ TagManager:
   - Ladder
   - Grabbable
   - readableObject
+  - speakNPC
   layers:
   - Default
   - TransparentFX

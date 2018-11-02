@@ -31,8 +31,8 @@ public class PushItem : MonoBehaviour {
                 case "readableObject":
                     ReadObject();
                     break;
-                case "speakNpc":
-                    //SpeakNPC();
+                case "speakNPC":
+                    SpeakNPC();
                     break;
                 default: break;
             }
@@ -71,7 +71,7 @@ public class PushItem : MonoBehaviour {
                 Debug.Log("Released object");
                 whileHolding = false;
                 reset = true;
-                Vector3 direction = new Vector3(0, 10, 9);
+                //Vector3 direction = new Vector3(0, 10, 9);
                 rb.useGravity = true;
             }
         }
@@ -97,23 +97,24 @@ public class PushItem : MonoBehaviour {
                 reset = false;
             }
         }
+    }
 
-        else if(objectTag == "readableObject")
+
+    private void OnTriggerEnter(Collider other)
+    {
+        objectTag = other.gameObject.tag;
+        if (objectTag == "readableObject")
         {
+            touchingObject = true;
             Debug.Log("Can read object.");
         }
 
-        else if(objectTag == "speakNpc")
+        else if (objectTag == "speakNPC")
         {
+            touchingObject = true;
             Debug.Log("Can speak to.");
         }
-
-        /*else
-        {
-            Debug.Log("Something else is touching.");
-        }*/
     }
-
 
     private void OnCollisionExit(Collision collision)
     {
@@ -141,12 +142,23 @@ public class PushItem : MonoBehaviour {
         }
     }
 
-    //Press e to read
+    //Read objects
     void ReadObject()
     {
-        if (Input.GetKey("e"))
+        //while holding e, read object
+        if (Input.GetKeyDown("e"))
         {
             Debug.Log("Reading.");
+        }
+    }
+
+    //Talk to NPC
+    void SpeakNPC()
+    {
+        //while holding e, NPC speaks
+        if (Input.GetKey("e"))
+        {
+            Debug.Log("NPC speaking.");
         }
     }
 }
