@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PushItem : MonoBehaviour {
+    string objectTag;
     bool whileHolding = false;
     bool touchingObject = false;
     bool reset = true;
@@ -20,28 +21,54 @@ public class PushItem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        PickUpObject(touchingObject);
+        if(touchingObject)
+        {
+            switch(objectTag)
+            {
+                case "moveableObject":
+                    PickUpObject();
+                    break;
+                case "readableObject":
+                    ReadObject();
+                    break;
+                case "speakNpc":
+                    //SpeakNPC();
+                    break;
+                default: break;
+            }
+        }
+
+
         if (whileHolding)
         {
             playerPos = transform.position;
             boxPos = collObjHolder.transform.position;
             boxDist = playerPos - collObjHolder.transform.position;
-            if (Input.GetKey("a") && playerPos.x >boxPos.x || Input.GetKey("d") && playerPos.x > boxPos.x)
-                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
-            else if (Input.GetKey("d") && playerPos.x <boxPos.x || Input.GetKey("a") && playerPos.x < boxPos.x)
-            {
-                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
-            }
-	    else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x >boxPos.x)
+
+
+            if (Input.GetKey("a") && playerPos.x > boxPos.x || Input.GetKey("d") && playerPos.x > boxPos.x)
             {
                 collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
             }
-	    else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x <boxPos.x)
+
+            else if (Input.GetKey("d") && playerPos.x < boxPos.x || Input.GetKey("a") && playerPos.x < boxPos.x)
             {
                 collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
             }
+
+            else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x > boxPos.x)
+            {
+                collObjHolder.transform.position = new Vector3((playerPos.x - moveRight), (playerPos.y), collObj.transform.position.z);
+            }
+
+            else if (!Input.GetKey("a") && !Input.GetKey("d") && playerPos.x < boxPos.x)
+            {
+                collObjHolder.transform.position = new Vector3((playerPos.x + moveRight), (playerPos.y), collObj.transform.position.z);
+            }
+
             if (Input.GetKeyUp("f"))
             {
+                Debug.Log("Released object");
                 whileHolding = false;
                 reset = true;
                 Vector3 direction = new Vector3(0, 10, 9);
@@ -51,11 +78,14 @@ public class PushItem : MonoBehaviour {
 	}
 
 
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "moveableObject")
+        objectTag = collision.gameObject.tag;
+
+        if (objectTag == "moveableObject")
         {
-            Debug.Log("Player touching.");
+            Debug.Log("Can move object.");
             touchingObject = true;
             collObj = collision.gameObject;
             if (reset)
@@ -67,10 +97,21 @@ public class PushItem : MonoBehaviour {
                 reset = false;
             }
         }
-        else
+
+        else if(objectTag == "readableObject")
+        {
+            Debug.Log("Can read object.");
+        }
+
+        else if(objectTag == "speakNpc")
+        {
+            Debug.Log("Can speak to.");
+        }
+
+        /*else
         {
             Debug.Log("Something else is touching.");
-        }
+        }*/
     }
 
 
@@ -78,26 +119,34 @@ public class PushItem : MonoBehaviour {
     {
         Debug.Log("Player no longer touching.");
         touchingObject = false;
+        objectTag = "None";
     }
 
-    void PickUpObject(bool touching)
+
+
+    //Drag objects
+    void PickUpObject()
     {
-        if (touching)
+        playerPos = transform.position;
+        boxDist = playerPos - collObj.transform.position;
+
+        //While holding f, drag object
+        if (Input.GetKey("f"))
         {
-            playerPos = transform.position;
-            boxDist = playerPos - collObj.transform.position;
-            if (Input.GetKey("f"))
-            {
-                Debug.Log("Holding object");
-                whileHolding = true;
-                //drag object
-                collObj.transform.position = new Vector3((playerPos.x - boxDist.x), (playerPos.y - boxDist.y));
-                rb.useGravity = false;
-            }
-            if(Input.GetKeyUp("f"))
-            {
-                Debug.Log("Released object");
-            }
+            Debug.Log("Holding object");
+            whileHolding = true;
+            //drag object
+            collObj.transform.position = new Vector3((playerPos.x - boxDist.x), (playerPos.y - boxDist.y));
+            rb.useGravity = false;
+        }
+    }
+
+    //Press e to read
+    void ReadObject()
+    {
+        if (Input.GetKey("e"))
+        {
+            Debug.Log("Reading.");
         }
     }
 }

@@ -437,7 +437,7 @@ MonoBehaviour:
   directionLeft: 10
   directionUp: 10
   jumpSpeed: 25
-  speed: 1
+  speed: 5
 --- !u!54 &1937236259
 Rigidbody:
   m_ObjectHideFlags: 0
