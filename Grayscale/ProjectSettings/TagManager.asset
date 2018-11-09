@@ -4,10 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - moveableObject 
+  - moveableObject
   - Ground
   - Ladder
   - Grabbable
+  - readableObject
+  - speakNPC
   layers:
   - Default
   - TransparentFX

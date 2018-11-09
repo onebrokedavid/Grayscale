@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpVelocity: 5
+  jumped: 0
+  climbable: 0
 --- !u!136 &136644740744664792
 CapsuleCollider:
   m_ObjectHideFlags: 1
