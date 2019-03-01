@@ -7,6 +7,7 @@ public class PushItem : MonoBehaviour {
     bool whileHolding = false;
     bool touchingObject = false;
     bool reset = true;
+    bool interacting = false;
     float moveRight;
     private Rigidbody rb;
     GameObject collObj; //object colliding with player
@@ -148,7 +149,19 @@ public class PushItem : MonoBehaviour {
         //while holding e, read object
         if (Input.GetKeyDown("e"))
         {
-            Debug.Log("Reading.");
+            switch (interacting)
+            {
+                case false:
+                    Debug.Log("Reading.");
+                    interacting = true;
+                    break;
+                case true:
+                    Debug.Log("No longer reading.");
+                    interacting = false;
+                    break;
+                default:break;
+
+            }
         }
     }
 
@@ -156,9 +169,21 @@ public class PushItem : MonoBehaviour {
     void SpeakNPC()
     {
         //while holding e, NPC speaks
-        if (Input.GetKey("e"))
+        if (Input.GetKeyDown("e"))
         {
-            Debug.Log("NPC speaking.");
+            switch (interacting)
+            {
+                case false:
+                    Debug.Log("NPC speaking.");
+                    interacting = true;
+                    break;
+                case true:
+                    Debug.Log("No longer speaking.");
+                    interacting = false;
+                    break;
+                default: break;
+
+            }
         }
     }
 }
