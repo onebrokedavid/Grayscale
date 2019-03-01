@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 30503020}
   - component: {fileID: 30503019}
   - component: {fileID: 30503023}
+  - component: {fileID: 30503024}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -208,6 +209,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yOffset: 5
   zOffset: 15
+--- !u!114 &30503024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 30503018}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03688adbc5b1ae6459918a5141482729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &127732094
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +366,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4969245642660324, guid: 328ff4b467a548649860cb1c1a8c08f9, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.68
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 4969245642660324, guid: 328ff4b467a548649860cb1c1a8c08f9, type: 2}
       propertyPath: m_LocalRotation.x
@@ -710,8 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jump: 0
   floating: 0
-  directionRight: 10
-  directionLeft: 10
+  direction: 10
   directionUp: 10
   jumpSpeed: 30
   speed: 1
@@ -891,6 +903,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &1555773528
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1555773522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 2, z: 20}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &1778568729
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,6 +927,7 @@ GameObject:
   - component: {fileID: 1778568731}
   - component: {fileID: 1778568730}
   - component: {fileID: 1778568734}
+  - component: {fileID: 1778568735}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: speakNPC
@@ -971,7 +996,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1778568729}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 1, z: 0}
+  m_LocalPosition: {x: 8, y: 1, z: 1.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -992,6 +1017,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!65 &1778568735
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1778568729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2005474456
 Prefab:
   m_ObjectHideFlags: 0
