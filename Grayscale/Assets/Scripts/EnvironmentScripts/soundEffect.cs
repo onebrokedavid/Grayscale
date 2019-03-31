@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class soundEffect : MonoBehaviour {
-    // get falling 
+    // get falling object's mass and velocity, then increase collider
 
 
 	// Use this for initialization
