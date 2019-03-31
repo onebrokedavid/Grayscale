@@ -12,6 +12,9 @@ public class airEffect : MonoBehaviour {
         Debug.Log("object inside of trigger");
         Vector3 newDirection = new Vector3(pushForce, hoverForce, 0);
         other.attachedRigidbody.AddForce(newDirection);
-        other.gameObject.GetComponent<Movement>().jump = true;
+        if (other.tag == "Player")
+        {
+            other.gameObject.GetComponent<Movement>().jump = true;
+        }
     }
 }
