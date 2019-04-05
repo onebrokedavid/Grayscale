@@ -27,6 +27,7 @@ public class PushItem : MonoBehaviour {
             switch(objectTag)
             {
                 case "moveableObject":
+                    Debug.Log("in contact w/ moveableObject");
                     PickUpObject();
                     break;
                 case "readableObject":
